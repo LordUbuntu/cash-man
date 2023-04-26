@@ -23,7 +23,7 @@ setup(
     },
     python_requires=">=3.10",
     classifiers=[
-        "Development Status :: Alpha",
+        "Development Status :: Planning",
         "License :: Unlicense",
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
