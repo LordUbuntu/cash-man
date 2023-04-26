@@ -12,7 +12,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/LordUbuntu/cash-man",
-    keywords=["python", "expense tracker", "personal finance", "finance", "cli"]
+    keywords=["python", "expense tracker", "personal finance", "finance", "cli"],
     license="Unlicense",
     author="Jacobus Burger",
     author_email="therealjacoburger@gmail.com",
