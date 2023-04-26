@@ -1,13 +1,13 @@
 # Cash Man
 
-A personal financial expenses tracker command line tool written in Python 3.
+Cashman is a personal expenses tracker for fun and profit.
 
 ## Info
 
-The program is built using Rich, Fire (or Click), and using CSV to read and store information for portability.
+Cashman uses rich and click to provide a straight-forward eye-candy cli experience for users. Expenses are tracked using CSV files to ensure maximum portability and interoperability for any personal financial workflow.
 
-## Usage
+For usage info, run `cashman --help`
 
-`cashman add <amount> <type> <date>`
+## Notes
 
-where `<amount>` is the amount of money expended, `<type>` is the "category" of the expense, such as "food" or "travel", and `<date>` is an optional `YYYY-MM-DD` format specifier if the expense was not on the current date. Ommitting `<date>` will assume the current date.
+May switch to Poetry for packaging in the future...
