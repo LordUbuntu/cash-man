@@ -29,7 +29,7 @@ setup(
     },
     classifiers=[
         "Development Status :: 1 - Planning",
-        "License :: Unlicense",
+        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
         "Topic :: Utilities",
