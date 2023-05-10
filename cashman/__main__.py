@@ -10,7 +10,7 @@ def cashman():
 
 @cashman.command()
 @click.option("--type", type=str, default="Unknown", help="what kind of transaction this was.")
-@click.option("--date", type=str, default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
 @click.argument("amount", type=float)
 def add(amount, type, date):
     """Record a financial transaction.
@@ -22,7 +22,7 @@ def add(amount, type, date):
 
 @cashman.command()
 @click.option("--type", type=str, default="Unknown", help="what kind of transaction this was.")
-@click.option("--date", type=str, default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
 @click.argument("amount", type=float)
 def sub(amount, type, date):
     """Record a financial transaction.
@@ -34,7 +34,7 @@ def sub(amount, type, date):
 
 # list transactions from date
 @cashman.command()
-@click.option("--date", type=str, default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
 def list(date):
     pass
 
