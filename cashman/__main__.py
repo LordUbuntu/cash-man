@@ -34,7 +34,7 @@ def sub(amount, type, date):
 
 # list transactions from date
 @cashman.command()
-@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+@click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()))
 def list(date):
     pass
 
