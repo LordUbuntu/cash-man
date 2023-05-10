@@ -32,6 +32,13 @@ def sub(amount, type, date):
     print("You recorded {} of type {} on date {}".format(-amount, type, date))
 
 
+# list transactions from date
+@cashman.command()
+@click.option("--date", type=str, default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+def list(date):
+    pass
+
+
 def main():
     print("Hello, World! 你好世界！ Hola Mundo!")
 
