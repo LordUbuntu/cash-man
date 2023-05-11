@@ -36,7 +36,11 @@ def sub(amount, type, date):
 @cashman.command()
 @click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()))
 def list(date):
-    pass
+    """List recent transactions.
+
+    DATE is the YYYY-MM-DD date of transactions to list.
+    """
+    print("Your transactions for {} are: []".format(date))
 
 
 def main():
