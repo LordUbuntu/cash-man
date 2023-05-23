@@ -19,12 +19,11 @@ def add(amount, type, date):
 
     AMOUNT is the positive amount gained.
     """
-    df = pd.DataFrame({
+    add_data({
         'Date': [date],
         'Type': [type],
         'Amount': [amount],
     })
-    add_data(df)
     print("You recorded {} of type {} on date {}".format(amount, type, date))
 
 
@@ -51,12 +50,13 @@ def list(date):
     print("Your transactions for {} are: []".format(date))
 
 
-def add_data(data_frame):
+def store_data(data: dict):
     # TODO:
     # - Create standard data path
     # - Check existence of csv to ensure headers are there
     # - Ensure add and sub functions use this one
     # - Robust this
+    data_frame = pd.DataFrame(data)
     data_frame.to_csv('{}.csv'.format(date.today().year), mode='a', header=False)
 
 
