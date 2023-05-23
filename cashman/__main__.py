@@ -59,6 +59,18 @@ def list(date):
     print(get_dataframe(date))
 
 
+@cashman.command()
+@click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()))
+def net(date):
+    """Calculates the net of transactions for a given date.
+    
+    DATE is the YYYY-MM-DD date of transactions to list.
+    """
+    date = date.date()  # because click gives me timestamps I don't want
+    total = get_dataframe(date)["Amount"].sum()
+    print("Your net transactions for {} are: {}".format(date, total))
+
+
 def store_dataframe(data: dict):
     # TODO:
     # - Create standard data path
