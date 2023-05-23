@@ -1,7 +1,9 @@
 # main cashman executable
+import os
+import pandas as pd
 from datetime import date
 import click
-# TODO might switch to argparse since I don't want users to have to put a -- at the end to record a negative transaction, though I might be able to get away with using a different subcommand for adding or subtracticing a transaction, though that seems painfully repetitive and overcomplicated.
+
 
 @click.group()
 def cashman():
@@ -17,6 +19,12 @@ def add(amount, type, date):
 
     AMOUNT is the positive amount gained.
     """
+    df = pd.DataFrame({
+        'Date': [date],
+        'Type': [type],
+        'Amount': [amount],
+    })
+    add_data(df)
     print("You recorded {} of type {} on date {}".format(amount, type, date))
 
 
@@ -43,8 +51,14 @@ def list(date):
     print("Your transactions for {} are: []".format(date))
 
 
-def main():
-    print("Hello, World! 你好世界！ Hola Mundo!")
+def add_data(data_frame):
+    # TODO:
+    # - Create standard data path
+    # - Check existence of csv to ensure headers are there
+    # - Ensure add and sub functions use this one
+    # - Robust this
+    data_frame.to_csv('{}.csv'.format(date.today().year), mode='a', header=False)
+
 
 
 if __name__ == '__main__':
