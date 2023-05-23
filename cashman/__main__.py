@@ -1,7 +1,7 @@
 # main cashman executable
 import os
 import pandas as pd
-from datetime import date
+import datetime
 import click
 
 
@@ -12,14 +12,15 @@ def cashman():
 
 @cashman.command()
 @click.option("--type", type=str, default="Unknown", help="what kind of transaction this was.")
-@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()), help="YYYY-MM-DD date transaction occured on.")
 @click.argument("amount", type=float)
 def add(amount, type, date):
     """Record a financial transaction.
 
     AMOUNT is the positive amount gained.
     """
-    store_data({
+    date = date.date()  # because click gives me timestamps I don't want
+    store_dataframe({
         'Date': [date],
         'Type': [type],
         'Amount': [amount],
@@ -29,14 +30,15 @@ def add(amount, type, date):
 
 @cashman.command()
 @click.option("--type", type=str, default="Unknown", help="what kind of transaction this was.")
-@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()), help="YYYY-MM-DD date transaction occured on.")
+@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()), help="YYYY-MM-DD date transaction occured on.")
 @click.argument("amount", type=float)
 def sub(amount, type, date):
     """Record a financial transaction.
 
     AMOUNT is the negative amount lost.
     """
-    store_data({
+    date = date.date()  # because click gives me timestamps I don't want
+    store_dataframe({
         'Date': [date],
         'Type': [type],
         'Amount': [-amount],
@@ -46,24 +48,24 @@ def sub(amount, type, date):
 
 # list transactions from date
 @cashman.command()
-@click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(date.today()))
+@click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()))
 def list(date):
     """List recent transactions.
 
     DATE is the YYYY-MM-DD date of transactions to list.
     """
-    print("Your transactions for {} are: []".format(date))
+    date = date.date()  # because click gives me timestamps I don't want
+    print("Your transactions for {} are: ".format(date))
+    print(get_dataframe(date))
 
 
-def store_data(data: dict):
+def store_dataframe(data: dict):
     # TODO:
     # - Create standard data path
-    # - Check existence of csv to ensure headers are there
-    # - Ensure add and sub functions use this one
     # - Robust this
 
     # get file and path
-    file = "{}.csv".format(date.today().year)
+    file = "{}.csv".format(datetime.date.today().year)
     path = "{}/{}".format(os.getcwd(), file)
     # create data_frame
     data_frame = pd.DataFrame(data)
@@ -74,6 +76,14 @@ def store_data(data: dict):
             index=False,
             header=(not os.path.isfile(path))
     )
+
+
+def get_dataframe(date):
+    file = "{}.csv".format(datetime.date.today().year)
+    path = "{}/{}".format(os.getcwd(), file)
+    data_frame = pd.read_csv(path)
+    mask = (data_frame["Date"] == datetime.date.strftime(date, "%Y-%m-%d"))
+    return data_frame.loc[mask]
 
 
 
