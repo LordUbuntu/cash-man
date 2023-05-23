@@ -19,7 +19,7 @@ def add(amount, type, date):
 
     AMOUNT is the positive amount gained.
     """
-    add_data({
+    store_data({
         'Date': [date],
         'Type': [type],
         'Amount': [amount],
@@ -36,6 +36,11 @@ def sub(amount, type, date):
 
     AMOUNT is the negative amount lost.
     """
+    store_data({
+        'Date': [date],
+        'Type': [type],
+        'Amount': [-amount],
+    })
     print("You recorded {} of type {} on date {}".format(-amount, type, date))
 
 
@@ -56,8 +61,19 @@ def store_data(data: dict):
     # - Check existence of csv to ensure headers are there
     # - Ensure add and sub functions use this one
     # - Robust this
+
+    # get file and path
+    file = "{}.csv".format(date.today().year)
+    path = "{}/{}".format(os.getcwd(), file)
+    # create data_frame
     data_frame = pd.DataFrame(data)
-    data_frame.to_csv('{}.csv'.format(date.today().year), mode='a', header=False)
+    # add header if file exists, otherwise append data without header
+    data_frame.to_csv(
+            file,
+            mode='a',
+            index=False,
+            header=(not os.path.isfile(path))
+    )
 
 
 
