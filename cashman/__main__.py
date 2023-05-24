@@ -5,6 +5,12 @@ import datetime
 import click
 
 
+DATA_PATH = "{}/.local/share/cashman".format(os.path.expanduser('~'))
+if not os.path.exists(DATA_PATH):
+    print("'{}' doesn't exists, making path".format(DATA_PATH))
+    os.makedirs(DATA_PATH)
+
+
 @click.group()
 def cashman():
     pass
@@ -55,8 +61,12 @@ def list(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    print("Your transactions for {} are: ".format(date))
-    print(get_dataframe(date))
+    data_frame = get_dataframe(date)
+    if data_frame.empty:
+        print("There were no transactions for {}".format(date))
+    else:
+        print("Your transactions for {} are: ".format(date))
+        print(data_frame)
 
 
 @cashman.command()
@@ -67,23 +77,23 @@ def net(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    total = get_dataframe(date)["Amount"].sum()
-    print("Your net transactions for {} are: {}".format(date, total))
+    data_frame = get_dataframe(date)
+    if data_frame.empty:
+        print("There were no transactions for {}".format(date))
+    else:
+        total = data_frame["Amount"].sum()
+        print("Your net transactions for {} are: {}".format(date, total))
 
 
 def store_dataframe(data: dict):
-    # TODO:
-    # - Create standard data path
-    # - Robust this
-
     # get file and path
-    file = "{}.csv".format(datetime.date.today().year)
-    path = "{}/{}".format(os.getcwd(), file)
+    file = "{}.csv".format(data["Date"][0].year)
+    path = "{}/{}".format(DATA_PATH, file)
     # create data_frame
     data_frame = pd.DataFrame(data)
     # add header if file exists, otherwise append data without header
     data_frame.to_csv(
-            file,
+            path,
             mode='a',
             index=False,
             header=(not os.path.isfile(path))
@@ -91,12 +101,11 @@ def store_dataframe(data: dict):
 
 
 def get_dataframe(date):
-    file = "{}.csv".format(datetime.date.today().year)
-    path = "{}/{}".format(os.getcwd(), file)
+    file = "{}.csv".format(date.year)
+    path = "{}/{}".format(DATA_PATH, file)
     data_frame = pd.read_csv(path)
     mask = (data_frame["Date"] == datetime.date.strftime(date, "%Y-%m-%d"))
     return data_frame.loc[mask]
-
 
 
 if __name__ == '__main__':
