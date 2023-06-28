@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import datetime
 # DATA
 DATA_PATH = "{}/.local/share/cashman".format(os.path.expanduser('~'))
 if not os.path.exists(DATA_PATH):
@@ -23,7 +24,7 @@ def store_dataframe(data: dict):
 
 
 # TODO: filter out dataframes
-def get_dataframe(mask, year=date.year):
+def get_dataframe(mask, year=datetime.date().year):
     file = "{}.csv".format(year)
     path = "{}/{}".format(DATA_PATH, file)
     data_frame = pd.read_csv(path)
