@@ -10,9 +10,18 @@ def cashman():
 
 
 @cashman.command()
-@click.option("--type", type=str, default="Unknown", help="what kind of transaction this was.")
-@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()), help="YYYY-MM-DD date transaction occured on.")
-@click.option("--desc", type=str, default="Unknown", help="additional info about transaction")
+@click.option("--type",
+              type=str,
+              default="Unknown",
+              help="what kind of transaction this was.")
+@click.option("--date",
+              type=click.DateTime(formats=['%Y-%m-%d']),
+              default=str(datetime.date.today()),
+              help="YYYY-MM-DD date transaction occured on.")
+@click.option("--desc",
+              type=str,
+              default="Unknown",
+              help="additional info about transaction")
 @click.argument("amount", type=float)
 def add(amount, type, date, desc):
     """Record a financial transaction.
@@ -30,9 +39,18 @@ def add(amount, type, date, desc):
 
 
 @cashman.command()
-@click.option("--type", type=str, default="Unknown", help="what kind of transaction this was.")
-@click.option("--date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()), help="YYYY-MM-DD date transaction occured on.")
-@click.option("--desc", type=str, default="Unknown", help="additional info about transaction")
+@click.option("--type",
+              type=str,
+              default="Unknown",
+              help="what kind of transaction this was.")
+@click.option("--date",
+              type=click.DateTime(formats=['%Y-%m-%d']),
+              default=str(datetime.date.today()),
+              help="YYYY-MM-DD date transaction occured on.")
+@click.option("--desc",
+              type=str,
+              default="Unknown",
+              help="additional info about transaction")
 @click.argument("amount", type=float)
 def sub(amount, type, date, desc):
     """Record a financial transaction.
@@ -51,7 +69,9 @@ def sub(amount, type, date, desc):
 
 # list transactions from date
 @cashman.command()
-@click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()))
+@click.argument("date",
+                type=click.DateTime(formats=['%Y-%m-%d']),
+                default=str(datetime.date.today()))
 def list(date):
     """List recent transactions.
 
@@ -67,7 +87,9 @@ def list(date):
 
 
 @cashman.command()
-@click.argument("date", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()))
+@click.argument("date",
+                type=click.DateTime(formats=['%Y-%m-%d']),
+                default=str(datetime.date.today()))
 def net(date):
     """Calculates the net of transactions for a given date.
     
@@ -85,7 +107,9 @@ def net(date):
 # TODO: Rewrite read and write functions for dataframes to allow better
 # filtering and selection
 @cashman.command()
-@click.argument("start", type=click.DateTime(formats=['%Y-%m-%d']), default=str(datetime.date.today()))
+@click.argument("start",
+                type=click.DateTime(formats=['%Y-%m-%d']),
+                default=str(datetime.date.today()))
 def diff(start, end):
     """Calculates the net change between two dates.
 
