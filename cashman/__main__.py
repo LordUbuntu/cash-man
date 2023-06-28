@@ -1,39 +1,7 @@
 # main cashman executable
-import os
-import pandas as pd
 import datetime
 import click
-
-
-
-DATA_PATH = "{}/.local/share/cashman".format(os.path.expanduser('~'))
-if not os.path.exists(DATA_PATH):
-    print("'{}' doesn't exists, making path".format(DATA_PATH))
-    os.makedirs(DATA_PATH)
-
-
-def store_dataframe(data: dict):
-    # get file and path
-    file = "{}.csv".format(data["Date"][0].year)
-    path = "{}/{}".format(DATA_PATH, file)
-    # create data_frame
-    data_frame = pd.DataFrame(data)
-    # add header if file exists, otherwise append data without header
-    data_frame.to_csv(
-            path,
-            mode='a',
-            index=False,
-            header=(not os.path.isfile(path))
-    )
-
-
-# TODO: filter out dataframes
-def get_dataframe(mask, year=date.year):
-    file = "{}.csv".format(year)
-    path = "{}/{}".format(DATA_PATH, file)
-    data_frame = pd.read_csv(path)
-    return data_frame.loc[mask]
-
+import data
 
 
 @click.group()
@@ -52,7 +20,7 @@ def add(amount, type, date, desc):
     AMOUNT is the positive amount gained.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    store_dataframe({
+    data.store_dataframe({
         'Date': [date],
         'Type': [type],
         'Amount': [amount],
@@ -72,7 +40,7 @@ def sub(amount, type, date, desc):
     AMOUNT is the negative amount lost.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    store_dataframe({
+    data.store_dataframe({
         'Date': [date],
         'Type': [type],
         'Amount': [-amount],
@@ -90,7 +58,7 @@ def list(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    data_frame = get_dataframe(date)
+    data_frame = data.get_dataframe(date)
     if data_frame.empty:
         print("There were no transactions for {}".format(date))
     else:
@@ -106,7 +74,7 @@ def net(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    data_frame = get_dataframe(date)
+    data_frame = data.get_dataframe(date)
     if data_frame.empty:
         print("There were no transactions for {}".format(date))
     else:
