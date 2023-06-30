@@ -25,7 +25,5 @@ def put(data: dict):
 
 
 def get(mask=True, year=datetime.date().year):
-    file = "{}.csv".format(year)
-    path = "{}/{}".format(DATA_PATH, file)
-    data_frame = pd.read_csv(path)
+    data_frame = pd.read_csv("{}/{}.csv".format(year, DATA_PATH, file))
     return data_frame.loc[mask]
