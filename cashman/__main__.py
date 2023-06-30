@@ -29,12 +29,7 @@ def add(amount, type, date, desc):
     AMOUNT is the positive amount gained.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    data.store_dataframe({
-        'Date': [date],
-        'Type': [type],
-        'Amount': [amount],
-        'Description': [desc],
-    })
+    # TODO: store dataframe
     print("You recorded {} of type {} on date {}".format(amount, type, date))
 
 
@@ -58,12 +53,7 @@ def sub(amount, type, date, desc):
     AMOUNT is the negative amount lost.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    data.store_dataframe({
-        'Date': [date],
-        'Type': [type],
-        'Amount': [-amount],
-        'Description': [desc],
-    })
+    # TODO: store dataframe
     print("You recorded {} of type {} on date {}".format(-amount, type, date))
 
 
@@ -78,7 +68,7 @@ def list(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    data_frame = data.get_dataframe(date)
+    # TODO: get dataframe
     if data_frame.empty:
         print("There were no transactions for {}".format(date))
     else:
@@ -96,7 +86,7 @@ def net(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    data_frame = data.get_dataframe(date)
+    # TODO: get dataframe
     if data_frame.empty:
         print("There were no transactions for {}".format(date))
     else:
