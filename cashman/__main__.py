@@ -86,7 +86,7 @@ def net(date):
     DATE is the YYYY-MM-DD date of transactions to list.
     """
     date = date.date()  # because click gives me timestamps I don't want
-    # TODO: get dataframe
+    
     if data_frame.empty:
         print("There were no transactions for {}".format(date))
     else:
